@@ -1,38 +1,22 @@
+// Go에서 최적화 하는 방법은
+// 동시에 작업을 처리하는 것이다.
 package main
 
 import (
-	"errors"
 	"fmt"
-	"net/http"
+	"time"
 )
 
-var errRequestFailed = errors.New("Request failed")
-
 func main() {
-	var results = make(map[string]string)
-	urls := []string{
-		"https://www.naver.com/",
-		"https://www.google.com/",
-	}
-	for _, url := range urls {
-		result := "OK"
-		err := hitURL(url)
-		if err != nil {
-			result = "FAILED"
-		}
-		results[url] = result
-	}
-	for url, result := range results {
-		fmt.Println(url, result)
-	}
+	timeCount("yena")
+	timeCount("kwon")
 }
 
-func hitURL(url string) error {
-	fmt.Println("Checking:", url)
-	resp, err := http.Get(url)
-	if err != nil || resp.StatusCode >= 400 {
-		fmt.Println(err, resp.StatusCode)
-		return errRequestFailed
+//Goroutines
+
+func timeCount(person string) {
+	for i := 0; i < 10; i++ {
+		fmt.Println(person, "counting...", i)
+		time.Sleep(time.Second)
 	}
-	return nil
 }
