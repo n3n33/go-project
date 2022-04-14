@@ -7,9 +7,11 @@ import (
 	"time"
 )
 
+// 메인 함수는 고루틴을 기다려주지않아,
 func main() {
-	timeCount("yena")
-	timeCount("kwon")
+	go timeCount("yena")
+	go timeCount("kwon")
+	time.Sleep(time.Second * 5)
 }
 
 //Goroutines
@@ -17,6 +19,6 @@ func main() {
 func timeCount(person string) {
 	for i := 0; i < 10; i++ {
 		fmt.Println(person, "counting...", i)
-		time.Sleep(time.Second)
+		time.Sleep(time.Second * 5)
 	}
 }
