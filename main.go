@@ -11,19 +11,22 @@ import (
 //Goroutines
 
 func main() {
-	c := make(chan bool)
-	people := [2]string{"yena", "kwon"}
+	c := make(chan string)
+	people := [2]string{"yena", "kwon","test", ""}
 	//go timeCount("yena")
 	//go timeCount("kwon")
 	for _, person := range people {
 		//result := go timeCount(person)
 		go timeCount(person, c)
 	}
-	result := <-c
-	fmt.Println(result)
-	fmt.Println(result)
-	fmt.Println(result)
-	fmt.Println(result)
+	fmt.Println("Waiting for messages")
+	resultOne := <-c
+	resultTwo := <-c
+	resultThree := <-c
+	fmt.Println("Received this meaage: ", resultOne)
+	fmt.Println("Received this meaage: ", resultTwo)
+	fmt.Println("Received this meaage: ", resultThree)
+	// 메세지를 기다리는 건 blocking operation이다.
 	//time.Sleep(time.Second * 10)
 	//return true
 }
@@ -32,10 +35,10 @@ func main() {
 // go-routine 과 다른 go-routine 으로 커뮤니케이션 하는것도 가능함
 // Channel은 Pipe 같은 것임
 
-func timeCount(person string, c chan bool) {
+func timeCount(person string, c chan string) {
 	time.Sleep(time.Second * 5)
 	//return true
-	c <- true
+	c <- person + " counting,,"
 	//for i := 0; i < 10; i++ {
 	//	fmt.Println(person, "counting...", i)
 	//	time.Sleep(time.Second * 5)
